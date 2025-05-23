@@ -26,12 +26,17 @@ function getAllElement() {
 }
 
 async function controller() {
-  console.log(craftList);
+  console.table(craftList);
 
   const items = getAllElement();
 
   for (let index = 0; index < items.length; index++) {
     for (let jndex = index + 1; jndex < items.length; jndex++) {
+      const first = items[index].getAttribute("data-item-text");
+      const second = items[jndex].getAttribute("data-item-text");
+  
+      if (hasBeenTested(first, second)) continue;
+      
       await wait(100);
       lastItem = document
         .querySelector(".items-inner")
@@ -57,19 +62,28 @@ function addToTable(first, second) {
   if (lastItem != child) {
     console.log(first + " + " + second + " = " + child);
     craftList.push({
-      item1: first.getAttribute("data-item-text"),
-      item2: second.getAttribute("data-item-text"),
+      item1: first,
+      item2: second,
       result: child,
     });
+  }else{
+    craftList.push({
+      item1: first,
+      item2: second,
+      result: null,
+    });
   }
-  craftList.push({
-    item1: first.getAttribute("data-item-text"),
-    item2: second.getAttribute("data-item-text"),
-    result: none,
-  });
+ 
 
 }
 
+function hasBeenTested(first, second) {
+  return craftList.some(
+    (entry) =>
+      (entry.item1 === first && entry.item2 === second) ||
+      (entry.item1 === second && entry.item2 === first)
+  );
+}
 
 
 
