@@ -52,9 +52,7 @@ async function controller() {
 }
 
 function addToTable(first, second) {
-  const child = document
-    .querySelector(".items-inner")
-    .lastChild.children[0].getAttribute("data-item-text");
+  const child = document.elementFromPoint(middleW, middleH).lastChild.textContent
   // TODO: le psuh dans le tableau de craft ne fonctionne pas
 
   
